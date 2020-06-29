@@ -5,65 +5,60 @@ import java.util.List;
 
 public class Camio {
 	
-	
-	private double PesMaxim;
-    private double PesActual;
-    private List<Vaca> Vaques;
-    private double Litres;
+	private double pesMaxim;
+    private double pesActual;
+    private List<Vaca> vaques;
+    private double litres;
 	
     public Camio(double pesMax)
     {
-        PesMaxim = pesMax;
-        PesActual = 0;
-        Vaques = new ArrayList<Vaca>();
-    }
-    
+        pesMaxim = pesMax;
+        pesActual = 0;
+        vaques = new ArrayList<Vaca>();
+    } 
     
     public double getPesMaxim() {
-		return PesMaxim;
+		return pesMaxim;
 	}
-
 
 	public double getPesActual() {
-		return PesActual;
+		return pesActual;
 	}
 
-
 	public List<Vaca> getVaques() {
-		return Vaques;
+		return vaques;
 	}
 
 	public double getLitres() {
-		return Litres;
+		return litres;
 	}
 
+	public double getLitresRecalculant() { 
+    	return vaques.stream().mapToDouble(i -> i.GetLitres()).sum();
+    }
 
-	public double GetLitres() { 
-    	return Vaques.stream().mapToDouble(i -> i.GetLitres()).sum();
-    };
-
-    public boolean EntraVaca(Vaca vaca)
+    public boolean entraVaca(Vaca vaca)
     {
-        if (PesActual + vaca.getPes() > PesMaxim)
-        {
+        if (pesActual + vaca.getPes() > pesMaxim)
             return false;
-        }
 
-        Vaques.add(vaca);
-        PesActual += vaca.getPes();
+        vaques.add(vaca);
+        pesActual += vaca.getPes();
         return true;
     }
 
-    public boolean TreuVaca(Vaca vaca)
+    public boolean treuVaca(Vaca vaca)
     {
-        boolean resultat = Vaques.remove(vaca);
-        if (resultat) { PesActual -= vaca.getPes(); }
+        boolean resultat = vaques.remove(vaca);
+
+        if (resultat)
+            pesActual -= vaca.getPes();
         return resultat;
     }
 
     @Override
     public String toString() {
-    	return "Camio max: " + PesMaxim + "(" + PesActual + " - vaques: " + Vaques.size();
+    	return "Camio max: " + pesMaxim + "(Pes actual: " + pesActual + " - vaques: " + vaques.size() + ")";
     }
 
 }
